@@ -1,0 +1,175 @@
+:root {
+  --bg: #fbf7f0;
+  --surface: #ffffff;
+  --ink: #1e2229;
+  --muted: #6b7280;
+  --line: #e6e0d6;
+  --accent: #0f6466;
+  --accent-soft: #e3f0ef;
+  --warm: #c1502e;
+  --radius: 12px;
+  --shadow: 0 1px 2px rgba(30, 34, 41, .06), 0 4px 14px rgba(30, 34, 41, .05);
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 16px/1.5 ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif;
+  -webkit-text-size-adjust: 100%;
+}
+
+#app { min-height: 100%; display: flex; flex-direction: column; }
+
+/* ---------- shell ---------- */
+
+.topbar {
+  position: sticky; top: 0; z-index: 500;
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px) * 0);
+  background: var(--accent); color: #fff;
+}
+.topbar h1 { margin: 0; font-size: 17px; letter-spacing: .01em; }
+.topbar .spacer { flex: 1; }
+.topbar .who { font-size: 12px; opacity: .85; max-width: 40vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.topbar button {
+  background: rgba(255,255,255,.16); color: #fff; border: 0;
+  padding: 6px 12px; border-radius: 999px; font-size: 13px; cursor: pointer;
+}
+.topbar button:hover { background: rgba(255,255,255,.26); }
+
+.tabs {
+  display: flex; gap: 4px; padding: 8px 12px; overflow-x: auto;
+  background: var(--surface); border-bottom: 1px solid var(--line);
+  position: sticky; top: 46px; z-index: 400;
+}
+.tabs button {
+  flex: 0 0 auto; border: 0; background: transparent; color: var(--muted);
+  padding: 8px 14px; border-radius: 999px; font-size: 14px; cursor: pointer;
+}
+.tabs button.active { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+
+main { flex: 1; min-height: 0; padding: 16px; max-width: 900px; width: 100%; margin: 0 auto; }
+/* The map fills the viewport below the shell, so that view drops the padding
+   and max-width and becomes a flex parent the map can stretch inside. */
+main.flush { display: flex; padding: 0; max-width: none; }
+
+/* ---------- generic ---------- */
+
+.card {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius); box-shadow: var(--shadow);
+}
+
+.muted { color: var(--muted); }
+.small { font-size: 13px; }
+.center { text-align: center; }
+
+button.primary {
+  background: var(--accent); color: #fff; border: 0; border-radius: 10px;
+  padding: 12px 18px; font-size: 15px; font-weight: 600; cursor: pointer;
+}
+button.primary:disabled { opacity: .55; cursor: default; }
+button.link {
+  background: none; border: 0; color: var(--warm); cursor: pointer;
+  font-size: 13px; padding: 0; text-decoration: underline;
+}
+
+label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+
+input, select, textarea {
+  width: 100%; padding: 11px 12px; font-size: 16px; font-family: inherit;
+  border: 1px solid var(--line); border-radius: 10px; background: #fff; color: var(--ink);
+}
+input:focus, select:focus, textarea:focus { outline: 2px solid var(--accent-soft); border-color: var(--accent); }
+
+.field { margin-bottom: 16px; }
+
+.banner {
+  padding: 12px 14px; border-radius: 10px; font-size: 14px; margin-bottom: 16px;
+}
+.banner.error { background: #fdecea; color: #8a1c10; }
+.banner.info { background: var(--accent-soft); color: #0b4a4c; }
+
+/* ---------- login ---------- */
+
+.login-wrap { flex: 1; display: grid; place-items: center; padding: 24px; }
+.login { width: 100%; max-width: 380px; padding: 28px; }
+.login h1 { margin: 0 0 4px; font-size: 26px; }
+.login .sub { margin: 0 0 24px; color: var(--muted); font-size: 14px; }
+
+/* ---------- schedule ---------- */
+
+.day-head { margin: 26px 0 10px; font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.day-head:first-child { margin-top: 4px; }
+
+.stop { padding: 14px 16px; margin-bottom: 10px; }
+.stop .row { display: flex; gap: 12px; align-items: baseline; }
+.stop .time { flex: 0 0 76px; font-size: 13px; font-weight: 700; color: var(--warm); }
+.stop .title { font-size: 16px; font-weight: 600; }
+.stop .blurb { font-size: 13px; color: var(--muted); margin-top: 2px; }
+
+.strip { display: flex; gap: 8px; overflow-x: auto; margin-top: 12px; padding-bottom: 4px; }
+.strip img {
+  height: 76px; width: 76px; object-fit: cover; border-radius: 8px;
+  flex: 0 0 auto; cursor: pointer; background: var(--line);
+}
+
+/* ---------- gallery ---------- */
+
+.grid {
+  display: grid; gap: 8px;
+  grid-template-columns: repeat(auto-fill, minmax(108px, 1fr));
+}
+.grid img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 8px; cursor: pointer; background: var(--line); }
+
+/* ---------- map ---------- */
+
+#map { flex: 1; min-height: 0; }
+.map-pin {
+  width: 18px; height: 18px; border-radius: 50%;
+  border: 3px solid #fff; box-shadow: 0 1px 4px rgba(0,0,0,.4);
+}
+.map-pin.stop { background: var(--accent); }
+.map-pin.photo { background: var(--warm); }
+.map-legend {
+  background: rgba(255,255,255,.94); padding: 8px 10px; border-radius: 8px;
+  font-size: 12px; line-height: 1.7; box-shadow: var(--shadow);
+}
+.map-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; }
+.leaflet-popup-content { margin: 10px 12px; font-size: 13px; }
+.leaflet-popup-content img { width: 180px; border-radius: 6px; display: block; margin-top: 6px; }
+.leaflet-popup-content strong { display: block; margin-bottom: 2px; }
+
+/* ---------- upload ---------- */
+
+.queue { margin-top: 16px; }
+.queue-item { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-top: 1px solid var(--line); font-size: 14px; }
+.queue-item img { width: 44px; height: 44px; object-fit: cover; border-radius: 6px; }
+.queue-item .name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.queue-item .state { font-size: 12px; color: var(--muted); flex: 0 0 auto; }
+.queue-item .state.done { color: var(--accent); }
+.queue-item .state.failed { color: #8a1c10; }
+
+/* ---------- lightbox ---------- */
+
+.lightbox {
+  position: fixed; inset: 0; z-index: 1000; background: rgba(15, 18, 22, .92);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 20px;
+}
+.lightbox img { max-width: 100%; max-height: 72vh; border-radius: 8px; object-fit: contain; }
+.lightbox .meta { color: #f3f0ea; font-size: 14px; text-align: center; max-width: 560px; }
+.lightbox .meta .sub { color: #b9b3aa; font-size: 12px; margin-top: 4px; }
+.lightbox .actions { display: flex; gap: 12px; }
+.lightbox .actions button {
+  background: rgba(255,255,255,.14); color: #fff; border: 0;
+  border-radius: 999px; padding: 9px 18px; font-size: 14px; cursor: pointer;
+}
+.lightbox .actions button.danger { background: rgba(193, 80, 46, .85); }
+
+.empty { padding: 40px 20px; text-align: center; color: var(--muted); font-size: 14px; }
