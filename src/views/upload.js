@@ -4,6 +4,7 @@ import { el, clear } from '../lib/dom.js';
 import { scheduleByDay, formatDay, schedule } from '../data/schedule.js';
 import { uploadPhoto } from '../lib/photos.js';
 import { currentUser } from '../state.js';
+import { renderStorageMeter } from './storage-meter.js';
 
 // Preselect the stop nearest to today, so on the day of a stop the dropdown is
 // usually already right.
@@ -170,9 +171,13 @@ export function renderUpload(root) {
     submit
   ]);
 
-  root.append(el('div', { class: 'card', style: 'padding:18px' }, [form, message, queue]));
+  const meter = renderStorageMeter();
+  root.append(
+    el('div', { class: 'card', style: 'padding:18px' }, [meter.root, form, message, queue])
+  );
 
   return () => {
+    meter.destroy();
     miniMap?.remove();
     miniMap = null;
   };

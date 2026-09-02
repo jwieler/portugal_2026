@@ -58,6 +58,25 @@ export function photosForStop(stopId) {
   return photos.filter((p) => p.scheduleItemId === stopId);
 }
 
+// Google Cloud Storage's Always Free allowance, which is what keeps the Blaze
+// plan billing at zero. Binary GB, matching how usage is reported.
+export const FREE_STORAGE_BYTES = 5 * 1024 * 1024 * 1024;
+
+/**
+ * Totals stored bytes across every photo — original plus its thumbnail.
+ * `untracked` counts docs written before sizes were recorded; those contribute
+ * nothing to the total, so a non-zero count means the figure is an undercount.
+ */
+export function storageUsage(list = photos) {
+  let bytes = 0;
+  let untracked = 0;
+  for (const photo of list) {
+    if (typeof photo.size === 'number') bytes += photo.size + (photo.thumbSize || 0);
+    else untracked += 1;
+  }
+  return { bytes, untracked, count: list.length, limit: FREE_STORAGE_BYTES };
+}
+
 // A photo's map position, in priority order: its own EXIF GPS (most accurate),
 // then a pin dropped by hand, then the location of the stop it's attached to.
 export function resolveLocation(photo) {
@@ -117,6 +136,11 @@ export async function uploadPhoto(file, opts) {
     thumbPath: storedThumbPath,
     url,
     thumbUrl,
+    // Byte sizes are recorded here so the storage meter can total usage from
+    // the docs it already syncs, instead of listing the bucket and fetching
+    // metadata for every object.
+    size: file.size,
+    thumbSize: thumb ? thumb.size : 0,
     scheduleItemId: stopId,
     caption: caption || '',
     uploadedBy: user.email || user.uid,
