@@ -17,7 +17,7 @@ export async function readGps(file) {
   }
 }
 
-// Original phone photos are 3-6MB each. The Spark plan has no image-resize
+// Original phone photos are 3-6MB each. There's no server-side image-resize
 // function, so build the thumbnail in the browser before uploading: the gallery
 // and schedule strips then load ~30KB per photo instead of megabytes, which
 // matters a lot on roaming data.

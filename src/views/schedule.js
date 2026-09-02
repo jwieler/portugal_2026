@@ -22,12 +22,22 @@ export function renderSchedule(root) {
     for (const stop of items) {
       const strip = el('div', { class: 'strip', style: 'display:none' });
       strips.set(stop.id, strip);
+
+      // Unbooked stops are often titled "... (planned)". The badge already says
+      // so, so drop the suffix rather than printing it twice.
+      const planned = stop.confirmed === false;
+      const title = el('div', {
+        class: 'title',
+        text: planned ? stop.title.replace(/\s*\(planned\)\s*$/i, '') : stop.title
+      });
+      if (planned) title.append(el('span', { class: 'badge', text: 'Planned' }));
+
       root.append(
-        el('article', { class: 'card stop' }, [
+        el('article', { class: 'card stop' + (planned ? ' planned' : '') }, [
           el('div', { class: 'row' }, [
-            el('div', { class: 'time', text: stop.time || 'All day' }),
+            el('div', { class: 'time', text: stop.time || 'TBD' }),
             el('div', {}, [
-              el('div', { class: 'title', text: stop.title }),
+              title,
               stop.blurb ? el('div', { class: 'blurb', text: stop.blurb }) : null
             ])
           ]),
