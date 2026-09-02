@@ -165,6 +165,21 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--accent-soft
 .queue-item .state.done { color: var(--accent); }
 .queue-item .state.failed { color: #8a1c10; }
 
+/* ---------- storage meter ---------- */
+
+.meter { margin-bottom: 18px; }
+.meter-headline { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+.meter-track {
+  height: 8px; border-radius: 999px; background: var(--line); overflow: hidden;
+}
+.meter-fill {
+  height: 100%; width: 0; border-radius: 999px; background: var(--accent);
+  transition: width .3s ease;
+}
+.meter-fill.warn { background: #c98a1e; }
+.meter-fill.danger { background: var(--warm); }
+.meter-detail { margin-top: 6px; }
+
 /* ---------- lightbox ---------- */
 
 .lightbox {

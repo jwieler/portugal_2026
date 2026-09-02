@@ -130,6 +130,19 @@ In priority order:
 3. **The location of the stop it's attached to.** The fallback, and fine for
    most purposes.
 
+## Storage
+
+The upload screen shows how much of the free allowance is left, as a live bar
+("4.1 GB left of 5 GB · 213 photos · ~4.1 MB each"). It totals the byte sizes
+recorded on each photo document, so it costs no extra reads and updates the
+moment an upload lands. It turns amber past 80% and red past 95%.
+
+**Originals are uploaded exactly as the camera produced them — there is no
+compression on the full-size file.** Only the thumbnail is re-encoded. A recent
+phone photo runs 3-6MB, so 5GB is roughly 1,000-1,600 photos. If that starts
+looking tight, downscaling originals to ~2500px before upload would cut them to
+around 1MB with no visible loss on a phone or laptop screen.
+
 Photos also get a thumbnail generated in the browser before upload, so the
 gallery and schedule strips load tens of kilobytes per photo rather than the
 several megabytes a phone photo actually weighs. That matters on roaming data.

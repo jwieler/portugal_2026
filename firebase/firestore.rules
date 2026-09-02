@@ -14,6 +14,12 @@ service cloud.firestore {
                     && request.resource.data.scheduleItemId is string
                     && request.resource.data.caption is string
                     && request.resource.data.caption.size() < 500
+                    // Sizes drive the storage meter, so they have to be real
+                    // numbers rather than anything a client feels like sending.
+                    && request.resource.data.size is int
+                    && request.resource.data.size >= 0
+                    && request.resource.data.thumbSize is int
+                    && request.resource.data.thumbSize >= 0
                     // Uploads are stamped with the uploader's own identity so
                     // "who took this" can't be forged.
                     && request.resource.data.uploadedBy == request.auth.token.email;
