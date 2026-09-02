@@ -112,6 +112,13 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--accent-soft
 .stop .row { display: flex; gap: 12px; align-items: baseline; }
 .stop .time { flex: 0 0 76px; font-size: 13px; font-weight: 700; color: var(--warm); }
 .stop .title { font-size: 16px; font-weight: 600; }
+.stop.planned { border-style: dashed; }
+.badge {
+  display: inline-block; margin-left: 8px; padding: 1px 8px;
+  border-radius: 999px; font-size: 11px; font-weight: 700;
+  letter-spacing: .04em; text-transform: uppercase;
+  background: #f3ece2; color: #8a5a2b; vertical-align: 2px;
+}
 .stop .blurb { font-size: 13px; color: var(--muted); margin-top: 2px; }
 
 .strip { display: flex; gap: 8px; overflow-x: auto; margin-top: 12px; padding-bottom: 4px; }
@@ -136,6 +143,8 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--accent-soft
   border: 3px solid #fff; box-shadow: 0 1px 4px rgba(0,0,0,.4);
 }
 .map-pin.stop { background: var(--accent); }
+/* Planned-but-unbooked stops read as hollow: white centre, coloured ring. */
+.map-pin.stop.planned { background: #fff; border-color: var(--accent); }
 .map-pin.photo { background: var(--warm); }
 .map-legend {
   background: rgba(255,255,255,.94); padding: 8px 10px; border-radius: 8px;

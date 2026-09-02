@@ -89,12 +89,18 @@ deploy workflow rebuilds automatically. Each stop is:
 {
   id: 'pastel-de-nata-class',        // stable slug — photos reference this
   day: '2026-09-04',                 // YYYY-MM-DD, groups stops into days
-  time: '4:30 PM',                   // free text, '' for all-day
+  time: '4:30 PM',                   // free text, null if there's no set time
   title: 'Pastel de Nata Masterclass',
-  blurb: 'Rua de Santa Justa 87',    // optional
-  location: { lat: 38.7112, lng: -9.1378 }  // or null for no map pin
+  blurb: "Nat'elier, Rua de Santa Justa 87",  // optional
+  confirmed: true,                   // false = "Planned" badge + hollow map pin
+  location: { lat: 38.7112, lng: -9.1378, label: "Nat'elier" }  // or null
 }
 ```
+
+Stops render in the order written, so keep each day chronological — the times
+aren't parsed. Stops sharing exact coordinates (checking in and out of the same
+hotel, flying in and out of the same airport) collapse into one map pin whose
+popup lists everything that happens there.
 
 The one rule: **never change an `id` after photos have been attached to it**, or
 those photos lose their stop. Everything else is safe to edit any time.
